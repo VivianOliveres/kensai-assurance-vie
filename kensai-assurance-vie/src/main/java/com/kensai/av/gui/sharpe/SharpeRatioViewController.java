@@ -28,7 +28,7 @@ public class SharpeRatioViewController {
 	private Series<LocalDateTime, Number> serie5 = new Series<>("5 Ans", FXCollections.observableArrayList());
 	private Series<LocalDateTime, Number> serie10 = new Series<>("10 Ans", FXCollections.observableArrayList());
 
-	private LineChart<LocalDateTime, Number> sharpeRatioChart = new LineChart<>(new LocalDateTimeAxis(), new NumberAxis());
+	private LineChart<LocalDateTime, Number> sharpeRatioChart = new LineChart<>(new LocalDateTimeAxis(), new NumberAxis(0, 5, 1));
 
 	private BorderPane root = new BorderPane();
 

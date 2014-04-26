@@ -27,7 +27,7 @@ public class LipperViewController {
 	private Series<LocalDateTime, Number> serieCapitalPreservation = new Series<>("Capital Preservation", FXCollections.observableArrayList());
 	private Series<LocalDateTime, Number> serieRegularPerf = new Series<>("Regular Perf.", FXCollections.observableArrayList());
 
-	private LineChart<LocalDateTime, Number> lipperChart = new LineChart<>(new LocalDateTimeAxis(), new NumberAxis());
+	private LineChart<LocalDateTime, Number> lipperChart = new LineChart<>(new LocalDateTimeAxis(), new NumberAxis(0, 5, 1));
 
 	private BorderPane root = new BorderPane();
 

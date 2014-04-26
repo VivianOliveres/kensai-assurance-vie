@@ -60,4 +60,7 @@ public class ProductQuotes implements Iterable<Quote> {
 		return quotes.size();
 	}
 
+	public boolean isEmpty() {
+		return quotes.isEmpty();
+	}
 }

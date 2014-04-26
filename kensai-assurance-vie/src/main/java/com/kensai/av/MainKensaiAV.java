@@ -23,6 +23,7 @@ import com.kensai.av.datas.ProductQuotes;
 import com.kensai.av.gui.histo.HistoViewController;
 import com.kensai.av.gui.lipper.LipperViewController;
 import com.kensai.av.gui.morningstar.MorningStarViewController;
+import com.kensai.av.gui.price.PriceViewController;
 import com.kensai.av.gui.products.ProductsViewController;
 import com.kensai.av.gui.sharpe.SharpeRatioViewController;
 import com.kensai.av.persist.DatasZipper;
@@ -41,22 +42,25 @@ public class MainKensaiAV extends Application {
 		DataService service = createDataService();
 
 		// Create views
-		ProductsViewController productsController = new ProductsViewController(service);
+		ProductsViewController productsCtrl = new ProductsViewController(service);
 
-		HistoViewController histoController = new HistoViewController();
-		productsController.getSelectionEventStream().subscribe(event -> histoController.updateView(event));
+		HistoViewController histoCtrl = new HistoViewController();
+		productsCtrl.getSelectionEventStream().subscribe(event -> histoCtrl.updateView(event));
 
-		SharpeRatioViewController sharpeRatioController = new SharpeRatioViewController();
-		productsController.getSelectionEventStream().subscribe(event -> sharpeRatioController.updateView(event));
+		SharpeRatioViewController sharpeRatioCtrl = new SharpeRatioViewController();
+		productsCtrl.getSelectionEventStream().subscribe(event -> sharpeRatioCtrl.updateView(event));
 
-		LipperViewController lipperViewController = new LipperViewController();
-		productsController.getSelectionEventStream().subscribe(event -> lipperViewController.updateView(event));
+		LipperViewController lipperViewCtrl = new LipperViewController();
+		productsCtrl.getSelectionEventStream().subscribe(event -> lipperViewCtrl.updateView(event));
 
-		MorningStarViewController morningStarViewController = new MorningStarViewController();
-		productsController.getSelectionEventStream().subscribe(event -> morningStarViewController.updateView(event));
+		MorningStarViewController morningStarCtrl = new MorningStarViewController();
+		productsCtrl.getSelectionEventStream().subscribe(event -> morningStarCtrl.updateView(event));
+
+		PriceViewController priceCtrl = new PriceViewController();
+		productsCtrl.getSelectionEventStream().subscribe(event -> priceCtrl.updateView(event));
 
 		// Init stage
-		Scene scene = createScene(productsController, histoController, sharpeRatioController, lipperViewController, morningStarViewController);
+		Scene scene = createScene(productsCtrl, histoCtrl, sharpeRatioCtrl, lipperViewCtrl, morningStarCtrl, priceCtrl);
 		stage.setScene(scene);
 		stage.setTitle("Kensai Assurance Vie");
 		stage.show();
@@ -87,7 +91,8 @@ public class MainKensaiAV extends Application {
 									  HistoViewController histoCtrl,
 									  SharpeRatioViewController sharpeRatioCtrl,
 									  LipperViewController lipperCtrl, 
-									  MorningStarViewController morningStarViewCtrl) {
+									  MorningStarViewController morningStarViewCtrl,
+									  PriceViewController priceCtrl) {
 
 		BorderPane root = new BorderPane();
 		root.setLeft(productsCtrl.getView());
@@ -97,6 +102,7 @@ public class MainKensaiAV extends Application {
 		bottom.getChildren().add(sharpeRatioCtrl.getView());
 		bottom.getChildren().add(morningStarViewCtrl.getView());
 		bottom.getChildren().add(lipperCtrl.getView());
+		bottom.getChildren().add(priceCtrl.getView());
 		root.setBottom(bottom);
 
 		VBox righ = new VBox();
