@@ -1,4 +1,4 @@
-package com.kensai.av;
+package com.kensai.av.actions;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
@@ -18,21 +18,21 @@ import org.junit.Test;
 
 import com.kensai.av.datas.Product;
 import com.kensai.av.datas.ProductQuotes;
-import com.kensai.av.datas.Quote;
-import com.kensai.av.persist.DatasZipper;
-import com.kensai.av.persist.ProductQuotesWritter;
-import com.kensai.av.persist.QuoteRetriever;
 import com.kensai.av.products.ProductCsvReader;
 
-public class RetrieveAllQuotesTest {
+public class UpdateQuotesActionITTest {
 
 	private Path currentFolder = Paths.get("target", "current");
 	private Path oldFolder = Paths.get("target", "old");
+
+	private UpdateQuotesAction action;
 
 	@Before
 	public void before() throws IOException {
 		Files.createDirectories(currentFolder);
 		Files.createDirectories(oldFolder);
+
+		action = new UpdateQuotesAction(currentFolder, oldFolder);
 	}
 
 	@After
@@ -58,22 +58,18 @@ public class RetrieveAllQuotesTest {
 
 	@Test
 	public void should_retrieve_and_persist_all_quotes_and_save_previous_quotes() throws IOException {
-		// WHEN: read all products
+		// GIVEN: 5 products
 		Path productCsvPath = Paths.get("src", "test", "resources", "products.csv");
 		ProductCsvReader productReader = new ProductCsvReader();
 		List<Product> products = productReader.extract(productCsvPath);
-
-		// THEN: found 5 products
 		assertThat(products).hasSize(5);
 
+		// AND: Quotes for all
+		List<ProductQuotes> allQuotes = new ArrayList<ProductQuotes>();
+		products.forEach(product -> allQuotes.add(new ProductQuotes(product)));
+
 		// WHEN: Retrieve Quotes for each product and persist it
-		QuoteRetriever retriever = new QuoteRetriever();
-		ProductQuotesWritter writter = new ProductQuotesWritter(currentFolder);
-		for (Product product : products) {
-			Quote quote = retriever.retrieve(product);
-			ProductQuotes quotes = new ProductQuotes(product, quote);
-			writter.write(quotes);
-		}
+		action.execute(allQuotes);
 
 		// THEN: 5 files have been wrote
 		String[] listFilesName = currentFolder.toFile().list();
@@ -83,9 +79,7 @@ public class RetrieveAllQuotesTest {
 		}
 
 		// WHEN: DataZip files
-		DatasZipper zipper = new DatasZipper(currentFolder, oldFolder);
-		Path saveZip = zipper.save();
-		assertThat(Files.exists(saveZip)).isTrue();
-		assertThat(saveZip.toFile().getName().equals(LocalDate.now() + "zip"));
+		String[] zipFilesName = oldFolder.toFile().list();
+		assertThat(zipFilesName).isNotNull().hasSize(0);
 	}
 }

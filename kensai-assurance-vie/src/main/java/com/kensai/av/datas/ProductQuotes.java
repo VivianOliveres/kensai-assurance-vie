@@ -48,6 +48,10 @@ public class ProductQuotes implements Iterable<Quote> {
 		return false;
 	}
 
+	public void add(Quote quote) {
+		quotes.add(quote);
+	}
+
 	public List<Quote> getQuotes() {
 		return Lists.newArrayList(quotes);
 	}

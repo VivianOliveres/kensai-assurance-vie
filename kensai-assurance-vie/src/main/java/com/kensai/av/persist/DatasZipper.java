@@ -35,13 +35,20 @@ public class DatasZipper {
 	}
 
 	public Path save() throws IOException {
-		if (!shouldSave()) {
+		if (isEmpty()) {
+			log.info("Can not save datas. Reason: no datas to save");
+			return null;
+		} else if (!shouldSave()) {
 			log.warn("Can not save datas. Reason: already saved [" + destZip + "]");
 			return destZip;
 		}
 
 		ZipUtil.pack(fromFolder.toFile(), destZip.toFile());
 		return destZip;
+	}
+
+	private boolean isEmpty() {
+		return fromFolder.toFile().list().length == 0;
 	}
 
 	private boolean shouldSave() {
