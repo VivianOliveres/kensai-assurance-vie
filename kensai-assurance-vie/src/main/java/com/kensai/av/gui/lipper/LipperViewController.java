@@ -13,11 +13,16 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.layout.BorderPane;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.kensai.av.datas.ProductQuotes;
 import com.kensai.av.datas.Quote;
 import com.kensai.av.gui.utils.LocalDateTimeAxis;
 
 public class LipperViewController {
+	private static Logger log = LogManager.getLogger(LipperViewController.class);
+
 	private Series<LocalDateTime, Number> serieAbsPerf = new Series<>("Absolute Perf.", FXCollections.observableArrayList());
 	private Series<LocalDateTime, Number> serieCapitalPreservation = new Series<>("Capital Preservation", FXCollections.observableArrayList());
 	private Series<LocalDateTime, Number> serieRegularPerf = new Series<>("Regular Perf.", FXCollections.observableArrayList());
@@ -49,9 +54,12 @@ public class LipperViewController {
 
 		lipperChart.setTitle("Lipper notations for " + quotes.getProduct().getIsin());
 
+		log.info("Update view with " + quotes.size() + " quotes on " + quotes.getProduct());
 		for (Quote quote : quotes) {
 			LocalDate date = quote.getDate();
 			LocalDateTime time = LocalDateTime.of(date.getYear(), date.getMonth(), date.getDayOfMonth(), 0, 0);
+			log.info("Add data: Date[" + time + "] AbsPerf[" + quote.getNotationLipperAbsolutePerformances() + "] CapPreserv["
+				+ quote.getNotationLipperCapitalPreservation() + "] RegularPerf[" + quote.getNotationLipperRegularPerformances() + "]");
 			serieAbsPerf.getData().add(new Data<>(time, quote.getNotationLipperAbsolutePerformances()));
 			serieCapitalPreservation.getData().add(new Data<>(time, quote.getNotationLipperCapitalPreservation()));
 			serieRegularPerf.getData().add(new Data<>(time, quote.getNotationLipperRegularPerformances()));

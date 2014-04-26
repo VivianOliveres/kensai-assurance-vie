@@ -56,4 +56,8 @@ public class ProductQuotes implements Iterable<Quote> {
 		return Lists.newArrayList(quotes);
 	}
 
+	public int size() {
+		return quotes.size();
+	}
+
 }
