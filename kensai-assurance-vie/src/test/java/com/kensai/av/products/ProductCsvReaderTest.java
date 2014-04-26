@@ -1,4 +1,4 @@
-package com.kensai.av;
+package com.kensai.av.products;
 
 
 import static com.kensai.av.assertions.KensaiAssertions.assertThat;

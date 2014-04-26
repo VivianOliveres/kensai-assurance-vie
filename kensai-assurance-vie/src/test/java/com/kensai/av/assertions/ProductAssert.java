@@ -3,7 +3,8 @@ package com.kensai.av.assertions;
 import org.assertj.core.api.AbstractAssert;
 // Assertions is needed if an assertion for Iterable is generated
 
-import com.kensai.av.Product;
+
+import com.kensai.av.products.Product;
 
 
 /**

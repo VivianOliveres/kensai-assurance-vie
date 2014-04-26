@@ -2,7 +2,7 @@ package com.kensai.av.assertions;
 
 import org.assertj.core.api.Assertions;
 
-import com.kensai.av.Product;
+import com.kensai.av.products.Product;
 
 /**
  * Entry point for assertion of different data types. Each method in this class is a static factory for the
