@@ -3,6 +3,7 @@ package com.kensai.av.datas;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import com.google.common.base.Objects;
@@ -45,6 +46,10 @@ public class ProductQuotes implements Iterable<Quote> {
 			return Objects.equal(this.product, that.product);
 		}
 		return false;
+	}
+
+	public List<Quote> getQuotes() {
+		return Lists.newArrayList(quotes);
 	}
 
 }
