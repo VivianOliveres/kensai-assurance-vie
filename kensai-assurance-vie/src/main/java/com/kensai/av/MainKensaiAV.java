@@ -20,6 +20,7 @@ import org.apache.logging.log4j.Logger;
 import com.kensai.av.datas.Product;
 import com.kensai.av.datas.ProductQuotes;
 import com.kensai.av.gui.histo.HistoViewController;
+import com.kensai.av.gui.lipper.LipperViewController;
 import com.kensai.av.gui.products.ProductsViewController;
 import com.kensai.av.gui.sharpe.SharpeRatioViewController;
 import com.kensai.av.persist.DatasZipper;
@@ -46,8 +47,11 @@ public class MainKensaiAV extends Application {
 		SharpeRatioViewController sharpeRatioController = new SharpeRatioViewController();
 		productsController.getSelectionEventStream().subscribe(event -> sharpeRatioController.updateView(event));
 
+		LipperViewController lipperViewController = new LipperViewController();
+		productsController.getSelectionEventStream().subscribe(event -> lipperViewController.updateView(event));
+
 		// Init stage
-		Scene scene = createScene(productsController, histoController, sharpeRatioController);
+		Scene scene = createScene(productsController, histoController, sharpeRatioController, lipperViewController);
 		stage.setScene(scene);
 		stage.setTitle("Kensai Assurance Vie");
 		stage.show();
@@ -74,16 +78,18 @@ public class MainKensaiAV extends Application {
 		return service;
 	}
 
-	private Scene createScene(ProductsViewController productsController, 
-									  HistoViewController histoController,
-									  SharpeRatioViewController sharpeRatioController) {
+	private Scene createScene(ProductsViewController productsCtrl, 
+									  HistoViewController histoCtrl,
+									  SharpeRatioViewController sharpeRatioCtrl,
+									  LipperViewController lipperCtrl) {
 
 		BorderPane root = new BorderPane();
-		root.setLeft(productsController.getView());
-		root.setCenter(histoController.getView());
+		root.setLeft(productsCtrl.getView());
+		root.setCenter(histoCtrl.getView());
 
 		VBox righNode = new VBox();
-		righNode.getChildren().add(sharpeRatioController.getView());
+		righNode.getChildren().add(sharpeRatioCtrl.getView());
+		righNode.getChildren().add(lipperCtrl.getView());
 		root.setRight(righNode);
 
 		return new Scene(root);
