@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.kensai.av.gui.products.ProductsViewController;
 import com.kensai.av.products.Product;
 import com.kensai.av.products.ProductCsvReader;
 

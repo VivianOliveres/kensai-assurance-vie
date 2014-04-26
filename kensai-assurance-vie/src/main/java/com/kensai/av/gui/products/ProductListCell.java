@@ -1,4 +1,4 @@
-package com.kensai.av;
+package com.kensai.av.gui.products;
 
 import javafx.scene.control.ListCell;
 
