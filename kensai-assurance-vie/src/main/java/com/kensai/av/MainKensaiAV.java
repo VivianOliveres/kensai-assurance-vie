@@ -1,5 +1,7 @@
 package com.kensai.av;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,6 +11,7 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +21,7 @@ import com.kensai.av.datas.Product;
 import com.kensai.av.datas.ProductQuotes;
 import com.kensai.av.gui.histo.HistoViewController;
 import com.kensai.av.gui.products.ProductsViewController;
+import com.kensai.av.gui.sharpe.SharpeRatioViewController;
 import com.kensai.av.persist.DatasZipper;
 import com.kensai.av.persist.ProductQuotesReader;
 import com.kensai.av.products.ProductCsvReader;
@@ -31,10 +35,31 @@ public class MainKensaiAV extends Application {
 	public void start(Stage stage) throws Exception {
 		log.info("Start application");
 
+		DataService service = createDataService();
+
+		// Create views
+		ProductsViewController productsController = new ProductsViewController(service);
+
+		HistoViewController histoController = new HistoViewController();
+		productsController.getSelectionEventStream().subscribe(event -> histoController.updateView(event));
+
+		SharpeRatioViewController sharpeRatioController = new SharpeRatioViewController();
+		productsController.getSelectionEventStream().subscribe(event -> sharpeRatioController.updateView(event));
+
+		// Init stage
+		Scene scene = createScene(productsController, histoController, sharpeRatioController);
+		stage.setScene(scene);
+		stage.setTitle("Kensai Assurance Vie");
+		stage.show();
+		log.info("Application started");
+	}
+
+	private DataService createDataService() throws URISyntaxException, IOException {
 		// Read all products
 		URL urlProducts = MainKensaiAV.class.getClassLoader().getResource("products.csv");
 		Path productsPath = Paths.get(urlProducts.toURI());
 		List<Product> products = new ProductCsvReader().extract(productsPath);
+		log.info("Initialized with " + products.size() + " products");
 
 		// Read all Quotes
 		ProductQuotesReader reader = new ProductQuotesReader();
@@ -44,25 +69,23 @@ public class MainKensaiAV extends Application {
 			allQuotes.add(quotes);
 		}
 
-		// Create Services and views
+		// Create Services
 		DataService service = new DataService(allQuotes);
-		ProductsViewController productsController = new ProductsViewController(service);
-
-		HistoViewController histoController = new HistoViewController();
-		productsController.getSelectionEventStream().subscribe(event -> histoController.updateView(event));
-
-		// Init stage
-		Scene scene = createScene(productsController, histoController);
-		stage.setScene(scene);
-		stage.setTitle("Kensai Assurance Vie");
-		stage.show();
-		log.info("Application started");
+		return service;
 	}
 
-	private Scene createScene(ProductsViewController productsController, HistoViewController histoController) {
+	private Scene createScene(ProductsViewController productsController, 
+									  HistoViewController histoController,
+									  SharpeRatioViewController sharpeRatioController) {
+
 		BorderPane root = new BorderPane();
 		root.setLeft(productsController.getView());
 		root.setCenter(histoController.getView());
+
+		VBox righNode = new VBox();
+		righNode.getChildren().add(sharpeRatioController.getView());
+		root.setRight(righNode);
+
 		return new Scene(root);
 	}
 
