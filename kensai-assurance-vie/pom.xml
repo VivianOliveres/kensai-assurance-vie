@@ -43,7 +43,7 @@
 				<version>1.2.0</version>
 				<configuration>
 					<packages>
-						<param>com.kensai.datas</param>
+						<param>com.kensai.av</param>
 					</packages>
 				</configuration>
 			</plugin>

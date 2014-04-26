@@ -1,0 +1,59 @@
+package com.kensai.av;
+
+
+import static com.kensai.av.assertions.KensaiAssertions.assertThat;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+
+public class ProductCsvReaderTest {
+
+	private ProductCsvReader reader;
+
+	@Before
+	public void before() {
+		reader = new ProductCsvReader();
+	}
+
+	@Test
+	public void should_read_all_lines() throws IOException {
+		// GIVEN: PATH
+		Path path = Paths.get("src", "test", "resources", "products.csv");
+
+		// WHEN: extract products
+		List<Product> products = reader.extract(path);
+
+		// THEN: 5 products
+		assertThat(products).isNotNull().hasSize(5);
+		assertThat(products.get(0)).isNotNull()
+											.hasName("Pioneer Fds Euroland Equity A EUR ND")
+											.isNotAV()
+											.isPEA()
+											.hasUrl("https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-356460");
+		assertThat(products.get(1)).isNotNull()
+											.hasName("Europe Value Acc")
+											.isAV()
+											.isPEA()
+											.hasUrl("https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-804164");
+		assertThat(products.get(2)).isNotNull()
+											.hasName("Europe Value Inc")
+											.isNotAV()
+											.isPEA()
+											.hasUrl("https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-804165");
+		assertThat(products.get(3)).isNotNull()
+											.hasName("Allianz Euro High Yield RC")
+											.isAV()
+											.isNotPEA()
+											.hasUrl("https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-805965");
+		assertThat(products.get(4)).isNotNull()
+											.hasName("Amundi Fds Eq US Relative Value AU-C")
+											.isAV()
+											.isNotPEA()
+											.hasUrl("https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=0P0000TJC5");
+	}
+}
