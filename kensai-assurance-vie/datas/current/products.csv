@@ -1,7 +1,6 @@
-#Name;isAV;isPEA;url
-Pioneer Fds Euroland Equity A EUR ND;false;true;https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-356460
-Europe Value Acc;true;true;https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-804164
-Europe Value Inc;false;true;https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-804165
-Allianz Euro High Yield RC;true;false;https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-805965
-Amundi Fds Eq US Relative Value AU-C;true;false;https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=0P0000TJC5
-
+#isin;Name;isAV;isPEA;url
+LU0119345287;Pioneer Fds Euroland Equity A EUR ND;false;true;http://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-356460
+FR0007046578;Europe Value Acc;true;true;http://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-804164
+FR0000445173;Europe Value Inc;false;true;http://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-804165
+FR0010032326;Allianz Euro High Yield RC;true;false;http://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-805965
+LU0568605769;Amundi Fds Eq US Relative Value AU-C;true;false;http://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=0P0000TJC5

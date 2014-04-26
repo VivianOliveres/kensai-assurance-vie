@@ -47,11 +47,12 @@ public class ProductCsvReader {
 
 	private Product extractProduct(String line, String csvSeparator) {
 		String[] split = line.split(csvSeparator);
-		String name = split[0];
-		boolean isAV = Boolean.parseBoolean(split[1]);
-		boolean isPEA = Boolean.parseBoolean(split[2]);
-		String url = split[3];
-		Product product = new Product(name, isPEA, isAV, url);
+		String isin = split[0];
+		String name = split[1];
+		boolean isAV = Boolean.parseBoolean(split[2]);
+		boolean isPEA = Boolean.parseBoolean(split[3]);
+		String url = split[4];
+		Product product = new Product(isin, name, isPEA, isAV, url);
 		return product;
 	}
 }

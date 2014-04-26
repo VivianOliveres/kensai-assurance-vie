@@ -2,10 +2,10 @@ package com.kensai.av.datas;
 
 import java.time.LocalDate;
 
-public class ProductValuesBuilder {
+public class QuoteBuilder {
 
 	private Product product;
-	private LocalDate date;
+	private LocalDate date = LocalDate.now();
 	private double price;
 	private String priceCurrency;
 	private int notationMorningStar;
@@ -17,72 +17,72 @@ public class ProductValuesBuilder {
 	private double sharpeRatio5;
 	private double sharpeRatio10;
 
-	public static ProductValuesBuilder create() {
-		return new ProductValuesBuilder();
+	public static QuoteBuilder create() {
+		return new QuoteBuilder();
 	}
 
-	public ProductValuesBuilder withProduct(Product product) {
+	public QuoteBuilder withProduct(Product product) {
 		this.product = product;
 		return this;
 	}
 
-	public ProductValuesBuilder withDate(LocalDate date) {
+	public QuoteBuilder withDate(LocalDate date) {
 		this.date = date;
 		return this;
 	}
 
-	public ProductValuesBuilder withPrice(double price) {
+	public QuoteBuilder withPrice(double price) {
 		this.price = price;
 		return this;
 	}
 
-	public ProductValuesBuilder withPriceCurrency(String priceCurrency) {
+	public QuoteBuilder withPriceCurrency(String priceCurrency) {
 		this.priceCurrency = priceCurrency;
 		return this;
 	}
 
-	public ProductValuesBuilder withNotationMorningStar(int notationMorningStar) {
+	public QuoteBuilder withNotationMorningStar(int notationMorningStar) {
 		this.notationMorningStar = notationMorningStar;
 		return this;
 	}
 
-	public ProductValuesBuilder withNotationLipperCapitalPreservation(int notationLipperCapitalPreservation) {
+	public QuoteBuilder withNotationLipperCapitalPreservation(int notationLipperCapitalPreservation) {
 		this.notationLipperCapitalPreservation = notationLipperCapitalPreservation;
 		return this;
 	}
 
-	public ProductValuesBuilder withNotationLipperRegularPerformances(int notationLipperRegularPerformances) {
+	public QuoteBuilder withNotationLipperRegularPerformances(int notationLipperRegularPerformances) {
 		this.notationLipperRegularPerformances = notationLipperRegularPerformances;
 		return this;
 	}
 
-	public ProductValuesBuilder withNotationLipperAbsolutePerformances(int notationLipperAbsolutePerformances) {
+	public QuoteBuilder withNotationLipperAbsolutePerformances(int notationLipperAbsolutePerformances) {
 		this.notationLipperAbsolutePerformances = notationLipperAbsolutePerformances;
 		return this;
 	}
 
-	public ProductValuesBuilder withSharpeRatio1(double sharpeRatio1) {
+	public QuoteBuilder withSharpeRatio1(double sharpeRatio1) {
 		this.sharpeRatio1 = sharpeRatio1;
 		return this;
 	}
 
-	public ProductValuesBuilder withSharpeRatio3(double sharpeRatio3) {
+	public QuoteBuilder withSharpeRatio3(double sharpeRatio3) {
 		this.sharpeRatio3 = sharpeRatio3;
 		return this;
 	}
 
-	public ProductValuesBuilder withSharpeRatio5(double sharpeRatio5) {
+	public QuoteBuilder withSharpeRatio5(double sharpeRatio5) {
 		this.sharpeRatio5 = sharpeRatio5;
 		return this;
 	}
 
-	public ProductValuesBuilder withSharpeRatio10(double sharpeRatio10) {
+	public QuoteBuilder withSharpeRatio10(double sharpeRatio10) {
 		this.sharpeRatio10 = sharpeRatio10;
 		return this;
 	}
 
-	public ProductValues build() {
-		return new ProductValues(product, 
+	public Quote build() {
+		return new Quote(product, 
 										 date, 
 										 price, 
 										 priceCurrency, 

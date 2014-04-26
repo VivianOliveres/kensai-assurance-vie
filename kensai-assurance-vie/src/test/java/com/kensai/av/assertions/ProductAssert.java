@@ -3,8 +3,6 @@ package com.kensai.av.assertions;
 import org.assertj.core.api.AbstractAssert;
 // Assertions is needed if an assertion for Iterable is generated
 
-
-
 import com.kensai.av.datas.Product;
 
 
@@ -61,6 +59,29 @@ public class ProductAssert extends AbstractAssert<ProductAssert, Product> {
 		// check
 		if (actual.isAV()) {
 			failWithMessage("\nExpected actual Product not to be aV but was.");
+		}
+
+		// return the current assertion for method chaining
+		return this;
+	}
+
+	/**
+	 * Verifies that the actual Product's isin is equal to the given one.
+	 * @param isin the given isin to compare the actual Product's isin to.
+	 * @return this assertion object.
+	 * @throws AssertionError - if the actual Product's isin is not equal to the given one.
+	 */
+	public ProductAssert hasIsin(String isin) {
+		// check that actual Product we want to make assertions on is not null.
+		isNotNull();
+
+		// overrides the default error message with a more explicit one
+		String assertjErrorMessage = "\nExpected isin of:\n  <%s>\nto be:\n  <%s>\nbut was:\n  <%s>";
+
+		// null safe check
+		String actualIsin = actual.getIsin();
+		if (!org.assertj.core.util.Objects.areEqual(actualIsin, isin)) {
+			failWithMessage(assertjErrorMessage, actual, isin, actualIsin);
 		}
 
 		// return the current assertion for method chaining

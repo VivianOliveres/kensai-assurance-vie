@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import com.google.common.base.Objects;
 
-public class ProductValues {
+public class Quote {
 
 	private final Product product;
 	private final LocalDate date;
@@ -19,7 +19,7 @@ public class ProductValues {
 	private final double sharpeRatio5;
 	private final double sharpeRatio10;
 
-	public ProductValues(Product product, LocalDate date, double price, String priceCurrency, int notationMorningStar, int notationLipperCapitalPreservation,
+	public Quote(Product product, LocalDate date, double price, String priceCurrency, int notationMorningStar, int notationLipperCapitalPreservation,
 		int notationLipperRegularPerformances, int notationLipperAbsolutePerformances, double sharpeRatio1, double sharpeRatio3, double sharpeRatio5,
 		double sharpeRatio10) {
 		this.product = product;
@@ -91,8 +91,8 @@ public class ProductValues {
 
 	@Override
 	public boolean equals(Object object){
-		if (object instanceof ProductValues) {
-			ProductValues that = (ProductValues) object;
+		if (object instanceof Quote) {
+			Quote that = (Quote) object;
 			return Objects.equal(this.product, that.product) && Objects.equal(this.date, that.date);
 		}
 		return false;

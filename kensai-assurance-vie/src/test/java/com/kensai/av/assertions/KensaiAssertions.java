@@ -3,7 +3,7 @@ package com.kensai.av.assertions;
 import org.assertj.core.api.Assertions;
 
 import com.kensai.av.datas.Product;
-import com.kensai.av.datas.ProductValues;
+import com.kensai.av.datas.Quote;
 
 /**
  * Entry point for assertion of different data types. Each method in this class is a static factory for the
@@ -22,13 +22,13 @@ public class KensaiAssertions extends Assertions {
 	}
 
 	/**
-	 * Creates a new instance of <code>{@link ProductValuesAssert}</code>.
+	 * Creates a new instance of <code>{@link QuoteAssert}</code>.
 	 *
 	 * @param actual the actual value.
 	 * @return the created assertion object.
 	 */
-	public static ProductValuesAssert assertThat(ProductValues actual) {
-		return new ProductValuesAssert(actual);
+	public static QuoteAssert assertThat(Quote actual) {
+		return new QuoteAssert(actual);
 	}
 
 	/**

@@ -43,8 +43,7 @@
 				<version>1.2.0</version>
 				<configuration>
 					<packages>
-						<param>com.kensai.av.products</param>
-						<param>com.kensai.av.persist</param>
+						<param>com.kensai.av.datas</param>
 					</packages>
 				</configuration>
 			</plugin>

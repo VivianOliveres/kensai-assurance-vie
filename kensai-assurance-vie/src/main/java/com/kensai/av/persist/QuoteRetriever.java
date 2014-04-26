@@ -13,13 +13,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.kensai.av.datas.Product;
-import com.kensai.av.datas.ProductValues;
-import com.kensai.av.datas.ProductValuesBuilder;
+import com.kensai.av.datas.Quote;
+import com.kensai.av.datas.QuoteBuilder;
 
-public class ProductValuesRetriever {
-	private static Logger log = LogManager.getLogger(ProductValuesRetriever.class);
+public class QuoteRetriever {
+	private static Logger log = LogManager.getLogger(QuoteRetriever.class);
 
-	public ProductValues retrieveSafe(Product product) {
+	public Quote retrieveSafe(Product product) {
 		try {
 			return retrieve(product);
 
@@ -29,18 +29,18 @@ public class ProductValuesRetriever {
 		}
 	}
 
-	public ProductValues retrieve(Path htmlPath, Product product) throws IOException, NumberFormatException {
+	public Quote retrieve(Path htmlPath, Product product) throws IOException, NumberFormatException {
 		Document doc = Jsoup.parse(htmlPath.toFile(), "UTF-8", product.getUrl());
 		return retrieve(doc, product);
 	}
 
-	public ProductValues retrieve(Product product) throws IOException, NumberFormatException {
+	public Quote retrieve(Product product) throws IOException, NumberFormatException {
 		Document doc = Jsoup.connect(product.getUrl()).get();
 		return retrieve(doc, product);
 	}
 
-	private ProductValues retrieve(Document doc, Product product) throws IOException, NumberFormatException {
-		ProductValuesBuilder builder = ProductValuesBuilder.create().withDate(LocalDate.now()).withProduct(product);
+	private Quote retrieve(Document doc, Product product) throws IOException, NumberFormatException {
+		QuoteBuilder builder = QuoteBuilder.create().withDate(LocalDate.now()).withProduct(product);
 
 		// NAME
 		// Element name = doc.select("a[href=/bourse/opcvm/opcvm.phtml?symbole=MP-355456]").first();
@@ -71,14 +71,14 @@ public class ProductValuesRetriever {
 		return builder.build();
 	}
 
-	private void extractPrices(ProductValuesBuilder builder, Document doc) {
+	private void extractPrices(QuoteBuilder builder, Document doc) {
 		Element cotation = doc.select("span[class=cotation]").first();
 		String[] split = cotation.text().split(" ");
 		builder.withPrice(Double.parseDouble(split[0]));
 		builder.withPriceCurrency(split[1]);
 	}
 
-	private void extractMorningStar(ProductValuesBuilder builder, Document doc) {
+	private void extractMorningStar(QuoteBuilder builder, Document doc) {
 		Optional<Element> notationOpt = doc.select("TR[class=L10]")
 													  .stream()
 													  .filter(tr -> tr.select("td")
@@ -92,7 +92,7 @@ public class ProductValuesRetriever {
 		builder.withNotationMorningStar(stars);
 	}
 
-	private void extractLippers(ProductValuesBuilder builder, Document doc) {
+	private void extractLippers(QuoteBuilder builder, Document doc) {
 		// LIPPER: Préservation du capital
 		String lipperSaveCapital = doc.select("span[title=Préservation du capital]").first().text();
 		builder.withNotationLipperCapitalPreservation(Integer.parseInt(lipperSaveCapital));
@@ -106,7 +106,7 @@ public class ProductValuesRetriever {
 		builder.withNotationLipperAbsolutePerformances(Integer.parseInt(lipperPerfAbs));
 	}
 
-	private void extractSharpeRatios(ProductValuesBuilder builder, Document doc) {
+	private void extractSharpeRatios(QuoteBuilder builder, Document doc) {
 		Elements tables = doc.select("table");
 		Optional<Element> sharpeRatio = tables.stream()
 														  .filter(table -> table.select("tr")

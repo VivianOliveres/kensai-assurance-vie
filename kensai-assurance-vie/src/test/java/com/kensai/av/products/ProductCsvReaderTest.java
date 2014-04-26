@@ -33,26 +33,31 @@ public class ProductCsvReaderTest {
 		// THEN: 5 products
 		assertThat(products).isNotNull().hasSize(5);
 		assertThat(products.get(0)).isNotNull()
+											.hasIsin("LU0119345287")
 											.hasName("Pioneer Fds Euroland Equity A EUR ND")
 											.isNotAV()
 											.isPEA()
 											.hasUrl("http://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-356460");
 		assertThat(products.get(1)).isNotNull()
+											.hasIsin("FR0007046578")
 											.hasName("Europe Value Acc")
 											.isAV()
 											.isPEA()
 											.hasUrl("http://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-804164");
 		assertThat(products.get(2)).isNotNull()
+											.hasIsin("FR0000445173")
 											.hasName("Europe Value Inc")
 											.isNotAV()
 											.isPEA()
 											.hasUrl("http://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-804165");
 		assertThat(products.get(3)).isNotNull()
+											.hasIsin("FR0010032326")
 											.hasName("Allianz Euro High Yield RC")
 											.isAV()
 											.isNotPEA()
 											.hasUrl("http://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-805965");
 		assertThat(products.get(4)).isNotNull()
+											.hasIsin("LU0568605769")
 											.hasName("Amundi Fds Eq US Relative Value AU-C")
 											.isAV()
 											.isNotPEA()

@@ -4,12 +4,14 @@ import com.google.common.base.Objects;
 
 public class Product {
 
+	private final String isin;
 	private final String name;
 	private final boolean isPEA;
 	private final boolean isAV;
 	private final String url;
 	
-	public Product(String name, boolean isPEA, boolean isAV, String url) {
+	public Product(String isin, String name, boolean isPEA, boolean isAV, String url) {
+		this.isin = isin;
 		this.name = name;
 		this.isPEA = isPEA;
 		this.isAV = isAV;
@@ -34,17 +36,14 @@ public class Product {
 
 	@Override
 	public int hashCode(){
-		return Objects.hashCode(name, isPEA, isAV, url);
+		return Objects.hashCode(isin);
 	}
 	
 	@Override
 	public boolean equals(Object object){
 		if (object instanceof Product) {
 			Product that = (Product) object;
-			return Objects.equal(this.name, that.name)
-				&& Objects.equal(this.isPEA, that.isPEA)
-				&& Objects.equal(this.isAV, that.isAV)
-				&& Objects.equal(this.url, that.url);
+			return Objects.equal(this.isin, that.isin);
 		}
 		return false;
 	}
@@ -52,11 +51,16 @@ public class Product {
 	@Override
 	public String toString() {
 		return Objects.toStringHelper(this)
+			.add("isin", isin)
 			.add("name", name)
 			.add("isPEA", isPEA)
 			.add("isAV", isAV)
 			.add("url", url)
 			.toString();
+	}
+
+	public String getIsin() {
+		return isin;
 	}
 	
 }
