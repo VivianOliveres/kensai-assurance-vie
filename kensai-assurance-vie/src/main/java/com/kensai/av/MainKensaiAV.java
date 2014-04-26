@@ -11,6 +11,7 @@ import java.util.List;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -21,6 +22,7 @@ import com.kensai.av.datas.Product;
 import com.kensai.av.datas.ProductQuotes;
 import com.kensai.av.gui.histo.HistoViewController;
 import com.kensai.av.gui.lipper.LipperViewController;
+import com.kensai.av.gui.morningstar.MorningStarViewController;
 import com.kensai.av.gui.products.ProductsViewController;
 import com.kensai.av.gui.sharpe.SharpeRatioViewController;
 import com.kensai.av.persist.DatasZipper;
@@ -50,8 +52,11 @@ public class MainKensaiAV extends Application {
 		LipperViewController lipperViewController = new LipperViewController();
 		productsController.getSelectionEventStream().subscribe(event -> lipperViewController.updateView(event));
 
+		MorningStarViewController morningStarViewController = new MorningStarViewController();
+		productsController.getSelectionEventStream().subscribe(event -> morningStarViewController.updateView(event));
+
 		// Init stage
-		Scene scene = createScene(productsController, histoController, sharpeRatioController, lipperViewController);
+		Scene scene = createScene(productsController, histoController, sharpeRatioController, lipperViewController, morningStarViewController);
 		stage.setScene(scene);
 		stage.setTitle("Kensai Assurance Vie");
 		stage.show();
@@ -81,16 +86,21 @@ public class MainKensaiAV extends Application {
 	private Scene createScene(ProductsViewController productsCtrl, 
 									  HistoViewController histoCtrl,
 									  SharpeRatioViewController sharpeRatioCtrl,
-									  LipperViewController lipperCtrl) {
+									  LipperViewController lipperCtrl, 
+									  MorningStarViewController morningStarViewCtrl) {
 
 		BorderPane root = new BorderPane();
 		root.setLeft(productsCtrl.getView());
 		root.setCenter(histoCtrl.getView());
 
-		VBox righNode = new VBox();
-		righNode.getChildren().add(sharpeRatioCtrl.getView());
-		righNode.getChildren().add(lipperCtrl.getView());
-		root.setRight(righNode);
+		HBox bottom = new HBox();
+		bottom.getChildren().add(sharpeRatioCtrl.getView());
+		bottom.getChildren().add(morningStarViewCtrl.getView());
+		bottom.getChildren().add(lipperCtrl.getView());
+		root.setBottom(bottom);
+
+		VBox righ = new VBox();
+		root.setRight(righ);
 
 		return new Scene(root);
 	}
