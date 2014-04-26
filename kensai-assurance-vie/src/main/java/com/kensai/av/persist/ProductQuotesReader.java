@@ -14,8 +14,9 @@ public class ProductQuotesReader {
 
 	private QuoteCsvConverter converter = new QuoteCsvConverter();
 
-	public ProductQuotes extract(Product product, Path path) throws IOException {
-		return extract(product, Files.readAllLines(path));
+	public ProductQuotes extract(Product product, Path folder) throws IOException {
+		Path productPath = folder.resolve(product.getIsin() + ".csv");
+		return extract(product, Files.readAllLines(productPath));
 	}
 
 	public ProductQuotes extract(Product product, List<String> lines) {

@@ -33,7 +33,7 @@ public class ProductQuotesReaderTest {
 	@Test
 	public void should_read_quotes_for_amundi() throws IOException {
 		// GIVEN: Quotes file for AMUNDI
-		Path path = Paths.get("src", "test", "resources", "LU0568605769.csv");
+		Path path = Paths.get("src", "test", "resources");
 		KensaiAssertions.assertThat(Files.exists(path)).isTrue();
 
 		// WHEN: read quotes
