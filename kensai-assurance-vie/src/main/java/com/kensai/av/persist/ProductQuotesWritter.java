@@ -4,11 +4,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.base.Charsets;
 import com.kensai.av.datas.ProductQuotes;
 import com.kensai.av.datas.Quote;
 
 public class ProductQuotesWritter {
+	private static Logger log = LogManager.getLogger(DatasZipper.class);
 
 	private final QuoteCsvConverter converter = new QuoteCsvConverter();
 	private final Path toFolder;
@@ -22,10 +26,12 @@ public class ProductQuotesWritter {
 	}
 
 	public Path write(ProductQuotes quotes) throws IOException {
-		String fileName = quotes.getProduct().getIsin()+".csv";
+		log.info("Write quotes for " + quotes.getProduct());
+		String fileName = quotes.getProduct().getIsin() + ".csv";
 		Path csvPath = toFolder.resolve(fileName);
 
 		// Create file
+		log.info("Create file: " + csvPath);
 		Files.deleteIfExists(csvPath);
 		Files.createFile(csvPath);
 
