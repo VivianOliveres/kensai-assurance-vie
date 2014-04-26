@@ -6,7 +6,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.BorderPane;
 
-import com.kensai.av.products.Product;
+import com.kensai.av.datas.Product;
 
 public class ProductsViewController {
 

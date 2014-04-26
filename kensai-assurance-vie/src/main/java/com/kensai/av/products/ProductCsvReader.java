@@ -9,6 +9,8 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.kensai.av.datas.Product;
+
 public class ProductCsvReader {
 	private static Logger log = LogManager.getLogger(ProductCsvReader.class);
 

@@ -43,7 +43,8 @@
 				<version>1.2.0</version>
 				<configuration>
 					<packages>
-						<param>com.kensai.av</param>
+						<param>com.kensai.av.products</param>
+						<param>com.kensai.av.persist</param>
 					</packages>
 				</configuration>
 			</plugin>
@@ -63,11 +64,23 @@
 			<version>8.0.5</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.7.3</version>
+		</dependency>
+
 		<!-- Utils -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>16.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.zeroturnaround</groupId>
+			<artifactId>zt-zip</artifactId>
+			<version>1.7</version>
+			<type>jar</type>
 		</dependency>
 
 		<!-- Logging -->

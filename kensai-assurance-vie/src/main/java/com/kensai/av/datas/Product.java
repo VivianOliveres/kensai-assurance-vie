@@ -1,4 +1,4 @@
-package com.kensai.av.products;
+package com.kensai.av.datas;
 
 import com.google.common.base.Objects;
 

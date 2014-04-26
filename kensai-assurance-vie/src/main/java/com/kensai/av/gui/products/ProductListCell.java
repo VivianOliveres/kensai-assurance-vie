@@ -2,7 +2,7 @@ package com.kensai.av.gui.products;
 
 import javafx.scene.control.ListCell;
 
-import com.kensai.av.products.Product;
+import com.kensai.av.datas.Product;
 
 public class ProductListCell extends ListCell<Product> {
 
