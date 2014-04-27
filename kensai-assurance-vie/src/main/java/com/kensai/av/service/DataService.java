@@ -33,4 +33,10 @@ public class DataService {
 		return products;
 	}
 
+	public List<ProductQuotes> getAllProductQuotes() {
+		List<ProductQuotes> products = new ArrayList<>();
+		products.addAll(allQuotes.values());
+		return products;
+	}
+
 }

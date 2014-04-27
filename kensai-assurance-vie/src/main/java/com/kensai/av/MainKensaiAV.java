@@ -20,12 +20,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.kensai.av.datas.Product;
 import com.kensai.av.datas.ProductQuotes;
-import com.kensai.av.gui.histo.HistoViewController;
-import com.kensai.av.gui.lipper.LipperViewController;
-import com.kensai.av.gui.morningstar.MorningStarViewController;
-import com.kensai.av.gui.price.PriceViewController;
-import com.kensai.av.gui.products.ProductsViewController;
-import com.kensai.av.gui.sharpe.SharpeRatioViewController;
+import com.kensai.av.gui.GuiInitializer;
 import com.kensai.av.persist.DatasZipper;
 import com.kensai.av.persist.ProductQuotesReader;
 import com.kensai.av.products.ProductCsvReader;
@@ -42,25 +37,10 @@ public class MainKensaiAV extends Application {
 		DataService service = createDataService();
 
 		// Create views
-		ProductsViewController productsCtrl = new ProductsViewController(service);
-
-		HistoViewController histoCtrl = new HistoViewController();
-		productsCtrl.getSelectionEventStream().subscribe(event -> histoCtrl.updateView(event));
-
-		SharpeRatioViewController sharpeRatioCtrl = new SharpeRatioViewController();
-		productsCtrl.getSelectionEventStream().subscribe(event -> sharpeRatioCtrl.updateView(event));
-
-		LipperViewController lipperViewCtrl = new LipperViewController();
-		productsCtrl.getSelectionEventStream().subscribe(event -> lipperViewCtrl.updateView(event));
-
-		MorningStarViewController morningStarCtrl = new MorningStarViewController();
-		productsCtrl.getSelectionEventStream().subscribe(event -> morningStarCtrl.updateView(event));
-
-		PriceViewController priceCtrl = new PriceViewController();
-		productsCtrl.getSelectionEventStream().subscribe(event -> priceCtrl.updateView(event));
+		GuiInitializer initializer = new GuiInitializer(service);
 
 		// Init stage
-		Scene scene = createScene(productsCtrl, histoCtrl, sharpeRatioCtrl, lipperViewCtrl, morningStarCtrl, priceCtrl);
+		Scene scene = createScene(initializer);
 		stage.setScene(scene);
 		stage.setTitle("Kensai Assurance Vie");
 		stage.show();
@@ -87,22 +67,20 @@ public class MainKensaiAV extends Application {
 		return service;
 	}
 
-	private Scene createScene(ProductsViewController productsCtrl, 
-									  HistoViewController histoCtrl,
-									  SharpeRatioViewController sharpeRatioCtrl,
-									  LipperViewController lipperCtrl, 
-									  MorningStarViewController morningStarViewCtrl,
-									  PriceViewController priceCtrl) {
+	private Scene createScene(GuiInitializer initializer) {
 
 		BorderPane root = new BorderPane();
-		root.setLeft(productsCtrl.getView());
-		root.setCenter(histoCtrl.getView());
+
+		root.setTop(initializer.getMenuCtrl().getView());
+
+		root.setLeft(initializer.getProductsCtrl().getView());
+		root.setCenter(initializer.getHistoCtrl().getView());
 
 		HBox bottom = new HBox();
-		bottom.getChildren().add(sharpeRatioCtrl.getView());
-		bottom.getChildren().add(morningStarViewCtrl.getView());
-		bottom.getChildren().add(lipperCtrl.getView());
-		bottom.getChildren().add(priceCtrl.getView());
+		bottom.getChildren().add(initializer.getSharpeRatioCtrl().getView());
+		bottom.getChildren().add(initializer.getMorningStarCtrl().getView());
+		bottom.getChildren().add(initializer.getLipperViewCtrl().getView());
+		bottom.getChildren().add(initializer.getPriceCtrl().getView());
 		root.setBottom(bottom);
 
 		VBox righ = new VBox();
