@@ -41,6 +41,7 @@ public class MainKensaiAV extends Application {
 
 		// Init stage
 		Scene scene = createScene(initializer);
+		scene.getStylesheets().add("style-dark.css");
 		stage.setScene(scene);
 		stage.setTitle("Kensai Assurance Vie");
 		stage.show();
@@ -68,7 +69,6 @@ public class MainKensaiAV extends Application {
 	}
 
 	private Scene createScene(GuiInitializer initializer) {
-
 		BorderPane root = new BorderPane();
 
 		root.setTop(initializer.getMenuCtrl().getView());

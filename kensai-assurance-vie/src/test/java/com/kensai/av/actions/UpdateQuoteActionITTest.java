@@ -9,30 +9,49 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.kensai.av.assertions.KensaiAssertions;
 import com.kensai.av.datas.Product;
 import com.kensai.av.datas.ProductQuotes;
-import com.kensai.av.products.ProductCsvReader;
+import com.kensai.av.persist.ProductQuotesReader;
+import com.kensai.av.persist.ProductQuotesWritter;
+import com.kensai.av.persist.QuoteRetriever;
 
-public class UpdateQuotesActionITTest {
+public class UpdateQuoteActionITTest {
+	private static final Product AMUNDI = new Product("LU0568605769", 
+																	  "Amundi Fds Eq US Relative Value AU-C", 
+																	  true, 
+																	  false,
+																	  "http://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=0P0000TJC5");
 
 	private Path currentFolder = Paths.get("target", "current");
 	private Path oldFolder = Paths.get("target", "old");
 
-	private UpdateQuotesAction action;
+	private ProductQuotesWritter writter;
+	private QuoteRetriever retriever;
+
+	private UpdateQuoteAction action;
+
+	private ProductQuotes quotes;
 
 	@Before
 	public void before() throws IOException {
 		Files.createDirectories(currentFolder);
 		Files.createDirectories(oldFolder);
+		
+		writter = new ProductQuotesWritter(currentFolder);
+		retriever = new QuoteRetriever();
 
-		action = new UpdateQuotesAction(currentFolder, oldFolder);
+		ProductQuotesReader reader = new ProductQuotesReader();
+		Path path = Paths.get("src", "test", "resources");
+		quotes = reader.extract(AMUNDI, path);
+		KensaiAssertions.assertThat(quotes).hasSize(1);
+
+		action = new UpdateQuoteAction(quotes, writter, retriever);
 	}
 
 	@After
@@ -57,29 +76,17 @@ public class UpdateQuotesActionITTest {
 	}
 
 	@Test
-	public void should_retrieve_and_persist_all_quotes_and_save_previous_quotes() throws IOException {
-		// GIVEN: 5 products
-		Path productCsvPath = Paths.get("src", "test", "resources", "products.csv");
-		ProductCsvReader productReader = new ProductCsvReader();
-		List<Product> products = productReader.extract(productCsvPath);
-		assertThat(products).hasSize(5);
+	public void should_retrieve_and_persist_quotes() throws IOException {
+		// WHEN: Retrieve Quotes persist them
+		boolean isExecuted = action.exec();
 
-		// AND: Quotes for all
-		List<ProductQuotes> allQuotes = new ArrayList<ProductQuotes>();
-		products.forEach(product -> allQuotes.add(new ProductQuotes(product)));
-
-		// WHEN: Retrieve Quotes for each product and persist it
-		action.execute(allQuotes);
+		// THEN: quotes has been added
+		assertThat(isExecuted).isTrue();
+		assertThat(quotes).hasSize(2);
 
 		// THEN: 5 files have been wrote
 		String[] listFilesName = currentFolder.toFile().list();
-		assertThat(listFilesName).isNotNull().hasSize(5);
-		for (Product product : products) {
-			assertThat(listFilesName).contains(product.getIsin() + ".csv");
-		}
-
-		// WHEN: DataZip files
-		String[] zipFilesName = oldFolder.toFile().list();
-		assertThat(zipFilesName).isNotNull().hasSize(0);
+		assertThat(listFilesName).isNotNull().hasSize(1);
+		assertThat(listFilesName).contains(AMUNDI.getIsin() + ".csv");
 	}
 }
