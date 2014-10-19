@@ -1,10 +1,10 @@
 package com.kensai.av.datas;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
@@ -12,7 +12,7 @@ import com.google.common.collect.Lists;
 public class ProductQuotes implements Iterable<Quote> {
 
 	private final Product product;
-	private final Set<Quote> quotes = new HashSet<>();
+	private final Set<Quote> quotes = new TreeSet<>(new QuoteComparator());
 
 	public ProductQuotes(Product product, Quote... quotes) {
 		this(product, Lists.newArrayList(quotes));
