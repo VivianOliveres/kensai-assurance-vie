@@ -119,12 +119,21 @@ public class QuoteRetriever {
 
 		Element element = sharpeRatio.get();
 		String text1An = element.select("tr").first().select("td").get(2).text();
-		builder.withSharpeRatio1(Double.parseDouble(text1An));
+		builder.withSharpeRatio1(cleanDouble(text1An));
 		String text3An = element.select("tr").get(1).select("td").get(2).text();
-		builder.withSharpeRatio3(Double.parseDouble(text3An));
+		builder.withSharpeRatio3(cleanDouble(text3An));
 		String text5An = element.select("tr").first().select("td").get(6).text();
-		builder.withSharpeRatio5(Double.parseDouble(text5An));
+		builder.withSharpeRatio5(cleanDouble(text5An));
 		String text10An = element.select("tr").get(1).select("td").get(6).text();
-		builder.withSharpeRatio10(Double.parseDouble(text10An));
+		builder.withSharpeRatio10(cleanDouble(text10An));
+	}
+
+	private double cleanDouble(String value) {
+		if (value.equals("ND")) {
+			return Double.NaN;
+
+		} else {
+			return Double.parseDouble(value);
+		}
 	}
 }

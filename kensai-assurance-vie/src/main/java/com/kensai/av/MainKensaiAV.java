@@ -2,7 +2,6 @@ package com.kensai.av;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -50,8 +49,9 @@ public class MainKensaiAV extends Application {
 
 	private DataService createDataService() throws URISyntaxException, IOException {
 		// Read all products
-		URL urlProducts = MainKensaiAV.class.getClassLoader().getResource("products.csv");
-		Path productsPath = Paths.get(urlProducts.toURI());
+		// URL urlProducts = MainKensaiAV.class.getClassLoader().getResource("products.csv");
+		// Path productsPath = Paths.get(urlProducts.toURI());
+		Path productsPath = Paths.get("datas", "current", "products.csv");
 		List<Product> products = new ProductCsvReader().extract(productsPath);
 		log.info("Initialized with " + products.size() + " products");
 

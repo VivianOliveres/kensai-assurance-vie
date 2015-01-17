@@ -4,6 +4,11 @@ FR0007046578;Europe Value Acc;true;true;http://www.boursorama.com/bourse/opcvm/o
 FR0000445173;Europe Value Inc;false;true;http://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-804165
 FR0010032326;Allianz Euro High Yield RC;true;false;http://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-805965
 LU0568605769;Amundi Fds Eq US Relative Value AU-C;true;false;http://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=0P0000TJC5
-FR0007051040;Eurose C,true;false;https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-804518
+FR0007051040;Eurose C;true;false;https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-804518
 LU0138821268;Henderson Horizon Pan Eurp Eq A2 EUR;true;false;https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-356812
-FR0010032326;Allianz Euro High Yield RC;true;false;https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-805965
+LU0212178916;Parvest Equity Europe Small Cap C C;false;true;https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-958598
+LU0489687243;Mandarine Unique S&M Caps Europe R;false;true;https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-683859#orderframe
+FR0010836163;CPR Silver Age P A/I;;;https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-636234
+FR0000988438;SSgA Europe Small Cap Alpha Equity EUR;false;true;https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-803165
+FR0010288308;Groupama Avenir Euro N;false;true;https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-999283
+FR0010117093;Sycomore European Growth R;false;true;https://www.boursorama.com/bourse/opcvm/opcvm.phtml?symbole=MP-806204
